@@ -1,0 +1,27 @@
+**Get longhorm repo:**
+helm repo add longhorn https://charts.longhorn.io
+helm repo update
+kubectl create namespace longhorn-system
+
+kubectl config view --raw > ~/.kube/config
+
+**Install longhorn:**
+helm install longhorn longhorn/longhorn --namespace longhorn-system	
+
+kubectl -n longhorn-system get pod
+kubectl -n longhorn-system get svc
+kubectl port-forward -n longhorn-system svc/longhorn-frontend 8002:80
+
+**URL for longhorn:**
+http://localhost:8002
+
+
+**Tried uninstalling and reinstalling in other path** : Issue with disk space in server
+
+  helm delete -n longhorn-system longhorn
+  
+  k logs -fn longhorn-system longhorn-uninstall-hf
+  
+  helm delete -n longhorn-system longhorn
+
+ helm upgrade --install -n longhorn-system longhorn longhorn/longhorn  --value ./longvalue.yaml
